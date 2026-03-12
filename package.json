@@ -8,7 +8,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "babel src/ --out-dir dist/",
+    "minify": "terser dist/index.js -o dist/index.min.js --compress --mangle --source-map",
+    "clean": "rm -rf dist/",
+    "release": "npm run clean && npm run lint && npm run build && npm run minify",
+    "dev": "babel src/ --out-dir dist/ --watch",
+    "deploy": "gh-pages -d dist",
+    "deploy:prod": "rsync -avz --delete dist/ user@serwer.pl:/var/www/app/"
   },
   "dependencies": {
     "typescript": "^5.9.3"
